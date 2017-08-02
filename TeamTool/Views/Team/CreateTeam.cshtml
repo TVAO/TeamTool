@@ -1,0 +1,65 @@
+﻿
+<!-- Page used to create new team -->
+<!-- Team is composed of members, contact details and background information -->
+
+@model TeamTool.Models.ViewModels.CreateTeamViewModel
+@inject TeamTool.Models.Interfaces.IMemberRepository MemberRepository
+
+<br/>
+<h1> Add New Team </h1>
+
+<br />
+
+<form asp-controller="Team"
+      asp-action="CreateTeam"
+      asp-route-returnurl="@ViewData["ReturnUrl"]"
+      method="post"
+      class="form-horizontal">
+    
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <!-- Team Name Field and Input -->
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control"/>
+        <span asp-validation-for="Name" class="text-muted"></span> 
+    </div>
+    
+    <!-- Background field and input field -->
+    <div class="form-group">
+        <label asp-for="Background"></label>
+        <textarea asp-for="Background" class="form-control" rows="10"></textarea>
+        <span asp-validation-for="Background" class="text-muted"></span>
+    </div>
+    
+    <!-- Contact field and input field -->
+    <div class="form-group">
+        <label asp-for="Contact"></label>
+        <textarea asp-for="Contact" class="form-control" rows="10"></textarea>
+        <span asp-validation-for="Contact" class="text-muted"></span>
+    </div>
+
+    <!-- Members -->
+    <!-- TODO: fix adding members to viewm model -->
+    <div class="form-group">
+        <label asp-for="Members"></label>
+        <select asp-for="Members" class="form-control"
+                asp-items="@(new MultiSelectList(MemberRepository.GetAllEnumerable(), "Id", "Name"))">
+            <option> Please select team members... </option>
+        </select>
+        <span asp-validation-for="Members" class="text-muted"></span>
+    </div>
+    
+
+    <div class="form-group">
+        <a asp-controller="Team" asp-action="Teams"> Back </a>
+        <button type="submit" class="btn btn-sm btn-success"> Add Team </button>
+    </div>
+    
+
+
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -1,0 +1,68 @@
+﻿
+<!-- Teams Overview Page -->
+
+@model IEnumerable<TeamTool.Models.ViewModels.TeamViewModel>
+
+@{
+    ViewBag.Title = "Teams";
+}
+
+<h2> Teams </h2>
+
+<div div style="height: 350px; overflow: auto">
+    <table class="table">
+
+        <!-- Column titles -->
+        <tr>
+            <th> Team </th>
+            <!-- <th> Created </th> -->
+            <th> Action </th>
+        </tr>
+        
+        @if (Model != null)
+        {
+            foreach (var team in Model)
+            {
+                <tr>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => team.Name)*@
+                        @team.Name
+                    </td>
+                    @*<td>
+
+                            @Html.DisplayFor(modelItem => team.CreationDate)
+                        </td>*@
+                    <td>
+                        <a asp-controller="Team"
+                           asp-action="EditTeam"
+                           asp-route-id="@team.Id"
+                           class="btn btn-info">
+                            Edit
+                        </a>
+                        <a asp-controller="Team"
+                           asp-action="DeleteTeam"
+                           asp-route-id="@team.Id"
+                           class="btn btn-danger">
+                            Delete
+                        </a>
+                    </td>
+
+                </tr>
+            }
+        }
+        
+
+    </table>
+
+
+</div>
+<div>
+    <p>
+        <a asp-controller="Team"
+           asp-action="CreateTeam"
+           class="btn btn-success">
+            Add Team
+        </a>
+    </p>
+
+</div>

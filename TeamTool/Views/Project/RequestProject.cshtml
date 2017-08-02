@@ -1,0 +1,60 @@
+﻿
+<!-- View for Projects Overview Page -->
+<!-- View model used to represent projects on page -->
+@model TeamTool.Models.ViewModels.ProjectRequestViewModel
+@inject TeamTool.Models.Interfaces.ITeamRepository TeamRepository; 
+
+<!-- Inject page name into layout page -->
+@{
+    ViewBag.Title = "Request Project";
+}
+
+<!-- Project Page Form -->
+<!-- Push form in by 3 and take up 6 of total 12 to effectively be in center of page -->
+<div class="col-md-6 col-md-offset-3">
+    <h2> Request Project </h2>
+
+    <form asp-controller="Project"
+          asp-action="RequestProject"
+          asp-route-returnurl="@ViewData["ReturnUrl"]"
+          method="post"
+          class="form-horizontal">
+        <!-- Only show errors not shown on individual forms -->
+        <div asp-validation-summary="ModelOnly"></div>
+
+        <!-- Project name field and input field -->
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-muted"></span> <!-- Validate name -->
+        </div>
+
+        <!-- Description field and input field -->    
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" rows="10"></textarea>
+            <span asp-validation-for="Description" class="text-muted"></span>
+        </div>
+        
+        <!-- Team for project -->
+        <div class="form-group">
+            <label asp-for="TeamName"></label>
+            <select asp-for="TeamName" class="form-control"
+                    asp-items="@(new SelectList(TeamRepository.GetAllEnumerable(), "Id", "Name"))">
+                <option> Please select a team... </option>
+            </select>
+            <span asp-validation-for="TeamName" class="text-muted"></span>
+        </div>
+
+        <!-- Submit button -->
+        <div class="form-group">
+            <button type="submit" class="btn btn-lg btn-success">Submit</button>
+        </div>
+
+    </form>
+
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

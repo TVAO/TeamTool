@@ -1,0 +1,25 @@
+﻿
+<!-- Overview of Team Members -->
+
+@using System.Runtime.InteropServices.ComTypes
+@using TeamTool.Models.Interfaces
+@model TeamTool.Models.ViewModels.MemberViewModel
+@inject IMemberRepository MemberRepository
+
+@if (MemberRepository.GetAllEnumerable() != null)
+{
+    foreach (var member in MemberRepository.GetAllEnumerable())
+    {
+        //string imagePath = $"~/images/members/{member.Name}.PNG";
+        string imagePath = $"{member.Name}.PNG";
+
+        <div>
+            <h2> @member.Name </h2>
+            <h4> Skills: @member.Skill </h4>
+            @*<img src=@($"~/images/members/{member.Name}.PNG")/>*@
+            @*<img src="@String.Format()"/>*@
+            <img src="~/images/members/@imagePath" alt="ASP.NET" class="img-rounded" height="331" width="423"/>
+        </div>
+        <hr/>
+    }
+}
